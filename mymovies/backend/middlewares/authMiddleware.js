@@ -3,7 +3,7 @@ import User from "../models/User.js";
 import asyncHandler from "../middlewares/asyncHandler.js";
 
 //Check if User is Authenticated or not
-const authenticate = asyncHandler(async (req, res, next) => {
+const authenticateUser = asyncHandler(async (req, res, next) => {
   let token;
 
   // Read JWT from te 'jwt' cookie
@@ -11,7 +11,7 @@ const authenticate = asyncHandler(async (req, res, next) => {
   if (token) {
     try {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      req.user = await User.findbyId(decoded.userId).select("-password");
+      req.user = await User.findById(decoded.userId).select("-password");
       next();
     } catch (error) {
       res.status(401);
@@ -24,10 +24,11 @@ const authenticate = asyncHandler(async (req, res, next) => {
 });
 
 //Check user is admin or not
-const autorizeAdmin = (req, res, next) => {
+const authorizeAdmin = (req, res, next) => {
   if (req.user && req.user.isAdmin) {
     next();
   } else {
     res.status(401).send("Not authorized as an admin");
   }
 };
+export { authenticateUser, authorizeAdmin };
