@@ -20,7 +20,6 @@ const authSlice = createSlice({
       localStorage.clear();
     },
   },
-  s,
 });
 export const { setCreadentials, logout } = authSlice.actions;
 export default authSlice.reducer;
