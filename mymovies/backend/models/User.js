@@ -6,23 +6,26 @@ const userSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+
     email: {
       type: String,
       required: true,
       unique: true,
     },
+
     password: {
       type: String,
       required: true,
     },
+
     isAdmin: {
       type: Boolean,
-      default: false,
       required: true,
+      default: false,
     },
   },
-  { timestamps: true } // to automatically manage createdAt and updatedAt fields for eac document
+  { timestamps: true }
 );
 
-const User = mongoose.model("user", userSchema);
+const User = mongoose.model("User", userSchema);
 export default User;

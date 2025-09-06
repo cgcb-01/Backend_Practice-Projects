@@ -1,5 +1,5 @@
 import express from "express";
-//controllers
+// controllers
 import {
   createUser,
   loginUser,
@@ -7,23 +7,24 @@ import {
   getAllUsers,
   getCurrentUserProfile,
   updateCurrentUserProfile,
-} from "../controllers/userControllers.js";
-//middlwares
-import {
-  authenticateUser,
-  authorizeAdmin,
-} from "../middlewares/authMiddleware.js";
+} from "../controllers/userController.js";
+
+// middlewares
+import { authenticate, authorizeAdmin } from "../middlewares/authMiddleware.js";
 
 const router = express.Router();
+
 router
   .route("/")
   .post(createUser)
-  .get(authenticateUser, authorizeAdmin, getAllUsers);
+  .get(authenticate, authorizeAdmin, getAllUsers);
+
+router.post("/auth", loginUser);
+router.post("/logout", logoutCurrentUser);
 
 router
   .route("/profile")
-  .get(authenticateUser, getCurrentUserProfile)
-  .put(authenticateUser, updateCurrentUserProfile);
-router.post("/auth", loginUser);
-router.post("/logout", logoutCurrentUser);
+  .get(authenticate, getCurrentUserProfile)
+  .put(authenticate, updateCurrentUserProfile);
+
 export default router;
