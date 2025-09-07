@@ -86,7 +86,7 @@ const CreateMovie = () => {
         const formData = new FormData();
         formData.append("image", selectedImage);
 
-        const uploadImageResponse = await uploadImage(formData);
+        const uploadImageResponse = await uploadImage(formData).unwrap();
 
         if (uploadImageResponse.data) {
           uploadedImagePath = uploadImageResponse.data.image;
@@ -187,7 +187,7 @@ const CreateMovie = () => {
                 <option>Loading genres...</option>
               ) : (
                 genres.map((genre) => (
-                  <option key={genre.id} value={genre.id}>
+                  <option key={genre._id} value={genre._id}>
                     {genre.name}
                   </option>
                 ))
